@@ -60,7 +60,9 @@ guarantees an export always matches whatever seed is currently on screen.
   slider values into their valid ranges before they reach the motif
   generators.
 - `core/download.js` — `buildExportFilename` (pure, sanitizes the seed for a
-  safe file name) and `triggerDownload` (Blob + anchor-click plumbing).
+  safe file name and caps the slug at 40 chars so a pasted huge seed can't
+  produce a filename a filesystem rejects) and `triggerDownload` (Blob +
+  anchor-click plumbing, `doc` injectable for testing without jsdom).
 - `core/audio/mutePreference.js` + `core/audio/chime.js` — a synthesized
   WebAudio chime (oscillator + gain envelope), with its own mute flag
   persisted to `localStorage`. The `AudioContext` is created lazily on first
@@ -71,10 +73,19 @@ guarantees an export always matches whatever seed is currently on screen.
 ## Testing
 
 `npm test` runs Vitest over `test/*.test.js`, one file per core module —
-pure logic only (no DOM). Everything DOM-facing in `main.js` is exercised by
-manually driving the built app in a real (headless) browser rather than
-mocked in Vitest; see the BUILD run notes for the Playwright session used to
-verify it.
+pure logic only (no DOM); `src/core` sits at 100% line coverage
+(`npm run test:coverage`). Everything DOM-facing in `main.js` is exercised by
+manually driving the built app in a real (headless) browser via Playwright
+rather than mocked in Vitest — that's how the QA passes verify keyboard
+navigation, focus rings, resize behavior, and adversarial-input handling;
+see the QA run notes for the scripts used.
+
+A CSS gotcha worth knowing: `.control-group { display: flex }` has the same
+specificity as the UA stylesheet's `[hidden] { display: none }`, and author
+styles win that tie — so any element that's both `.control-group` and
+conditionally `hidden` (the strand-count/star-count parameter controls)
+needs the explicit `[hidden] { display: none !important; }` rule in
+`style.css` or the `hidden` attribute silently does nothing.
 
 ## Build / run
 
