@@ -25,4 +25,10 @@ describe('buildExportFilename', () => {
       'ornament-firstlight-astro-css.css',
     );
   });
+
+  it('caps an extremely long seed instead of producing an unbounded filename', () => {
+    const filename = buildExportFilename('x'.repeat(10000), 'astro', 'css', 'css');
+    expect(filename.length).toBeLessThan(80);
+    expect(filename).toBe(`ornament-${'x'.repeat(40)}-astro-css.css`);
+  });
 });
