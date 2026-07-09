@@ -27,7 +27,7 @@ them.
   - The currently active family is visually indicated (e.g. a selected
     state on the control) at all times.
 
-- [ ] **Design polish — studio UI.**
+- [x] **Design polish — studio UI.**
   - The studio page passes the D2/D3 design self-review checklist (resize
     390/768/1440, hover/focus/active states on every control, no anti-generic
     bans present) as verified and noted in a QA run.
@@ -101,7 +101,7 @@ them.
   - The preview occupies at least 60% of the viewport height on desktop
     and stacks full-width above the controls on phone width.
 
-- [ ] **Accessibility pass.**
+- [x] **Accessibility pass.**
   - Every interactive control has a visible focus ring and reaches focus
     via Tab in a logical order; icon-only buttons have `aria-label`s.
   - Body text and control labels meet a 4.5:1 contrast ratio against their
