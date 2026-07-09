@@ -42,10 +42,24 @@ npm test         # run the test suite
 npm run build    # production build to dist/
 ```
 
+## Using the studio
+
+Pick a seed (type one in or click **New seed**) and a motif family
+(**Nouveau** / **Astro**) — the preview updates live. From there:
+
+- **Export CSS** / **Export terminal theme** / **Export wallpaper** download
+  artifacts matching whatever seed and family are currently on screen.
+- **Copy seed** copies the current seed to your clipboard.
+- The address bar always reflects `?seed=&family=`, so any studio state is
+  shareable as a URL.
+
 ## Status
 
-Early scaffold. See [`docs/VISION.md`](docs/VISION.md) for the design
-rationale and [`docs/BACKLOG.md`](docs/BACKLOG.md) for the build plan.
+Live generation studio implemented: seed/family controls, a real-time
+preview, all three exports, and a shareable seed URL. See
+[`docs/VISION.md`](docs/VISION.md) for the design rationale,
+[`docs/DESIGN.md`](docs/DESIGN.md) for the visual direction, and
+[`docs/BACKLOG.md`](docs/BACKLOG.md) for what's left.
 
 ## License
 
