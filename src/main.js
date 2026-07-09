@@ -10,6 +10,7 @@ import { buildTerminalTheme } from './core/export/terminalTheme.js';
 import { buildWallpaperSvg } from './core/export/wallpaper.js';
 import { buildExportFilename, triggerDownload } from './core/download.js';
 import { createChimePlayer } from './core/audio/chime.js';
+import { clamp, STRAND_COUNT_RANGE, STAR_COUNT_RANGE } from './core/motifParams.js';
 
 const DEFAULT_SEED = 'first-light';
 const DEFAULT_FAMILY = 'astro';
@@ -27,6 +28,12 @@ const els = {
   copySeed: document.querySelector('#copy-seed'),
   muteToggle: document.querySelector('#mute-toggle'),
   toast: document.querySelector('#toast'),
+  paramNouveau: document.querySelector('#param-nouveau'),
+  paramAstro: document.querySelector('#param-astro'),
+  strandCount: document.querySelector('#strand-count'),
+  strandCountValue: document.querySelector('#strand-count-value'),
+  starCount: document.querySelector('#star-count'),
+  starCountValue: document.querySelector('#star-count-value'),
 };
 
 const TOAST_DURATION_MS = 2600;
@@ -44,6 +51,8 @@ const initialQueryState = parseSeedState(window.location.search);
 const state = {
   seed: initialQueryState.seed ?? DEFAULT_SEED,
   family: initialQueryState.family ?? DEFAULT_FAMILY,
+  strandCount: STRAND_COUNT_RANGE.default,
+  starCount: STAR_COUNT_RANGE.default,
 };
 
 function prefersReducedMotion() {
@@ -53,8 +62,8 @@ function prefersReducedMotion() {
 function currentBundle() {
   return {
     palette: generatePalette(state.seed, state.family),
-    nouveauPaths: generateNouveauMotif(state.seed),
-    astro: generateAstroMotif(state.seed),
+    nouveauPaths: generateNouveauMotif(state.seed, { strands: state.strandCount }),
+    astro: generateAstroMotif(state.seed, { stars: state.starCount }),
   };
 }
 
@@ -99,11 +108,17 @@ function setExportsEnabled(enabled) {
   els.exportWallpaper.disabled = !enabled;
 }
 
+function syncMotifParamVisibility() {
+  els.paramNouveau.hidden = state.family !== 'nouveau';
+  els.paramAstro.hidden = state.family !== 'astro';
+}
+
 function render({ animate = true } = {}) {
   const bundle = currentBundle();
   applyPaletteToPage(bundle.palette);
   swapPreview(renderMotifToSvg(bundle), { animate });
   syncFamilyButtons();
+  syncMotifParamVisibility();
   syncUrl();
   setExportsEnabled(true);
   return bundle;
@@ -117,6 +132,10 @@ function setSeed(seed) {
 }
 
 els.seedInput.value = state.seed;
+els.strandCount.value = String(state.strandCount);
+els.strandCountValue.textContent = state.strandCount;
+els.starCount.value = String(state.starCount);
+els.starCountValue.textContent = state.starCount;
 render({ animate: false });
 
 els.newSeed.addEventListener('click', () => {
@@ -202,4 +221,16 @@ els.muteToggle.addEventListener('click', () => {
   chime.setMuted(nextMuted);
   els.muteToggle.setAttribute('aria-pressed', String(nextMuted));
   els.muteToggle.setAttribute('aria-label', nextMuted ? 'Unmute sound' : 'Mute sound');
+});
+
+els.strandCount.addEventListener('input', () => {
+  state.strandCount = clamp(els.strandCount.value, STRAND_COUNT_RANGE);
+  els.strandCountValue.textContent = state.strandCount;
+  render({ animate: false });
+});
+
+els.starCount.addEventListener('input', () => {
+  state.starCount = clamp(els.starCount.value, STAR_COUNT_RANGE);
+  els.starCountValue.textContent = state.starCount;
+  render({ animate: false });
 });
