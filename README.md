@@ -1,37 +1,79 @@
 # Ornament
 
-A generative art-nouveau/astronomy-themed UI kit builder. Pick a palette and a
-motif, and Ornament procedurally draws you a matching set of design
-artifacts: CSS custom-property tokens, a terminal color theme, and a desktop
-wallpaper — all derived from a single seed, all generated in code.
+**▶ Live demo — [apps.charliekrug.com/ornament](https://apps.charliekrug.com/ornament/)**
 
-## Why
+One seed themes your terminal, site, and desktop.
 
-Most "theme generator" tools are lookup tables: a fixed list of palettes
-mapped to a fixed list of outputs. Ornament instead treats color and pattern
-as procedural systems — whiplash art-nouveau curves and star-chart
-constellations are drawn algorithmically from a seed, so every combination of
-palette and motif produces a genuinely unique, reproducible result.
+[![CI](https://github.com/ctkrug/ornament/actions/workflows/ci.yml/badge.svg)](https://github.com/ctkrug/ornament/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-c7a24a.svg)](LICENSE)
+
+Ornament turns a single seed into a matching set of design artifacts: CSS
+custom-property tokens for a web project, a 16-color terminal theme for your
+shell, and a tiled SVG wallpaper for your desktop. They all share one seeded
+palette, so your terminal, site, and desktop finally look like one thing
+instead of three unrelated color choices.
+
+It is for the people who already customize their tools (the dotfiles and
+`terminal.sexy` crowd) and want originality and cross-surface consistency that
+a fixed preset list cannot give them.
+
+## Why it exists
+
+Most theme generators are lookup tables: a small fixed set of hand-picked
+palettes mapped to a small fixed set of outputs. Pick "Nord" and you get the
+same swatch everyone else gets, with no procedural depth. And when you want the
+same colors as CSS, as a terminal scheme, and as a wallpaper, that is three
+separate tools and three separate color choices that never quite agree.
+
+Ornament treats color and pattern as procedural systems. Whiplash art-nouveau
+curves and star-chart constellations are drawn algorithmically from a seed, and
+every export is derived from that same seed, so the three artifacts are
+guaranteed to match.
 
 ## What it generates
 
-- **Palette** — a seeded HSL color system (background, surfaces, text,
-  accent, support accent) drawn from an art-nouveau or astronomy hue family.
-- **Motif** — procedural SVG pattern art: nouveau whiplash curves or
-  astronomical constellation charts, rendered from the same seed.
-- **CSS tokens** — a `:root { --ornament-* }` stylesheet ready to drop into
-  any project.
-- **Terminal theme** — a 16-color ANSI scheme derived from the same palette.
-- **Wallpaper** — a tiled SVG composition of the motif, sized for desktop
-  backgrounds.
+- **Palette:** a seeded HSL color system (background, two surfaces, text,
+  accent, support accent) from an art-nouveau or astronomy hue family.
+- **Motif:** procedural SVG art, either nouveau whiplash curves or an
+  astronomical constellation chart, drawn from the same seed.
+- **CSS tokens:** a `:root { --ornament-* }` stylesheet you can drop into any
+  project.
+- **Terminal theme:** a 16-color ANSI scheme derived from the same palette.
+- **Wallpaper:** a tiled SVG of the motif at 1080p, 1440p, or 4K.
 
-Every export is deterministic: the same seed always reproduces the same
-palette, motif, and derived artifacts.
+Generation is deterministic: the same seed and motif family always reproduce
+the same palette, artwork, and exports, so a seed is a shareable name for a
+whole theme.
 
-## Stack
+## Sample output
 
-Vanilla JavaScript, SVG, and the Canvas API — no UI framework. Built and
-tested with [Vite](https://vitejs.dev) and [Vitest](https://vitest.dev).
+The seed `first-light` with the Astro family exports this CSS:
+
+```css
+:root {
+  --ornament-bg: hsl(236 38% 14%);
+  --ornament-surface-1: hsl(236 34% 20%);
+  --ornament-surface-2: hsl(236 30% 27%);
+  --ornament-text: hsl(236 45% 92%);
+  --ornament-text-muted: hsl(236 20% 70%);
+  --ornament-accent: hsl(48 55% 55%);
+  --ornament-accent-support: hsl(178 45% 60%);
+  --ornament-success: hsl(130 40% 55%);
+  --ornament-danger: hsl(6 60% 58%);
+}
+```
+
+The `--ornament-accent` value above (`hsl(48 55% 55%)`) is byte-identical to
+the `yellow` key in that seed's terminal theme and the accent stroke in its
+wallpaper. Change the seed and all three move together.
+
+## Using the studio
+
+1. Pick a seed. Type any word, or click **New seed** for a random one.
+2. Choose **Nouveau** or **Astro**, then tune the strand or star count.
+3. Click **Export CSS**, **Export terminal theme**, or **Export wallpaper**.
+4. Click **Copy seed**, or share the URL: the address bar always reflects
+   `?seed=&family=`, so any studio state is shareable as a link.
 
 ## Development
 
@@ -42,25 +84,21 @@ npm test         # run the test suite
 npm run build    # production build to dist/
 ```
 
-## Using the studio
+Vanilla JavaScript with SVG and the Canvas API, no UI framework. Built with
+[Vite](https://vitejs.dev) and tested with [Vitest](https://vitest.dev); the
+generative core (`src/core`) sits at 100% line coverage
+(`npm run test:coverage`).
 
-Pick a seed (type one in or click **New seed**) and a motif family
-(**Nouveau** / **Astro**) — the preview updates live. From there:
+## Documentation
 
-- **Export CSS** / **Export terminal theme** / **Export wallpaper** download
-  artifacts matching whatever seed and family are currently on screen.
-- **Copy seed** copies the current seed to your clipboard.
-- The address bar always reflects `?seed=&family=`, so any studio state is
-  shareable as a URL.
-
-## Status
-
-Live generation studio implemented: seed/family controls, a real-time
-preview, all three exports, and a shareable seed URL. See
-[`docs/VISION.md`](docs/VISION.md) for the design rationale,
-[`docs/DESIGN.md`](docs/DESIGN.md) for the visual direction, and
-[`docs/BACKLOG.md`](docs/BACKLOG.md) for what's left.
+- [`docs/VISION.md`](docs/VISION.md): the problem and the design rationale.
+- [`docs/DESIGN.md`](docs/DESIGN.md): the astral-nouveau visual direction.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): how a seed becomes an export.
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT. See [`LICENSE`](LICENSE).
+
+More of Charlie's projects → https://apps.charliekrug.com
+</content>
+</invoke>
