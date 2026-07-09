@@ -231,6 +231,63 @@ h3 {
   box-shadow: 0 0 0 3px hsl(45 55% 55% / 0.35);
 }
 
+/* --- Range sliders --- */
+
+.range {
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: hsl(235 20% 40%);
+  border-radius: 2px;
+}
+
+.range::-moz-range-track {
+  height: 4px;
+  background: hsl(235 20% 40%);
+  border-radius: 2px;
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: var(--ornament-accent);
+  border: 2px solid var(--ornament-surface-2);
+  transition:
+    transform 120ms ease-out,
+    box-shadow var(--motion-ui);
+}
+
+.range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ornament-accent);
+  border: 2px solid var(--ornament-surface-2);
+  transition:
+    transform 120ms ease-out,
+    box-shadow var(--motion-ui);
+}
+
+.range:hover::-webkit-slider-thumb,
+.range:hover::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
+.range:focus-visible::-webkit-slider-thumb,
+.range:focus-visible::-moz-range-thumb {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(45 55% 55% / 0.4);
+}
+
 /* --- Buttons --- */
 
 .button,
