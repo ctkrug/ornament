@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -11,10 +11,67 @@
     <title>Ornament — generative palette &amp; motif studio</title>
   </head>
   <body>
-    <main class="app">
-      <h1 class="wordmark">Ornament</h1>
-      <div id="preview" class="preview" role="img" aria-label="Generated ornamental motif preview"></div>
-    </main>
-    <script type="module" src="/src/main.js"></script>
+    <div class="app">
+      <header class="studio-header">
+        <h1 class="wordmark">
+          Ornament
+          <svg class="wordmark-flourish" viewBox="0 0 220 16" aria-hidden="true">
+            <path d="M4 8 C 50 -2 90 18 110 8 S 170 -2 216 8" />
+          </svg>
+        </h1>
+        <button id="mute-toggle" class="icon-button" type="button" aria-label="Mute sound" aria-pressed="false">
+          <span aria-hidden="true">&#9835;</span>
+        </button>
+      </header>
+
+      <main class="studio-layout">
+        <section class="preview-panel">
+          <div id="preview" class="preview" role="img" aria-label="Generated ornamental motif preview"></div>
+        </section>
+
+        <section class="control-rail" aria-label="Studio controls">
+          <div class="control-group">
+            <label class="control-label" for="seed-input">Seed</label>
+            <div class="seed-row">
+              <input id="seed-input" class="seed-input" type="text" value="first-light" autocomplete="off" spellcheck="false" />
+              <button id="new-seed" class="button" type="button">New seed</button>
+            </div>
+            <button id="copy-seed" class="button button-ghost" type="button">Copy seed</button>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label" id="family-label">Motif family</span>
+            <div class="family-toggle" role="group" aria-labelledby="family-label">
+              <button id="family-nouveau" class="toggle-button" type="button" data-family="nouveau" aria-pressed="false">
+                Nouveau
+              </button>
+              <button id="family-astro" class="toggle-button" type="button" data-family="astro" aria-pressed="true">
+                Astro
+              </button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label" id="export-label">Export</span>
+            <div class="export-row">
+              <button id="export-css" class="button" type="button" disabled>Export CSS</button>
+              <button id="export-terminal" class="button" type="button" disabled>Export terminal theme</button>
+            </div>
+            <div class="wallpaper-row">
+              <label class="control-label" for="wallpaper-resolution">Wallpaper size</label>
+              <select id="wallpaper-resolution" class="select">
+                <option value="1920x1080">1920 &times; 1080</option>
+                <option value="2560x1440">2560 &times; 1440</option>
+                <option value="3840x2160">3840 &times; 2160</option>
+              </select>
+              <button id="export-wallpaper" class="button" type="button" disabled>Export wallpaper</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </div>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
