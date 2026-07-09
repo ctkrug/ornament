@@ -52,6 +52,11 @@ Export buttons read `generatePalette(state.seed, state.family)` /
 `currentBundle()` live at click time (not a cached bundle), which is what
 guarantees an export always matches whatever seed is currently on screen.
 
+Below the studio, `index.html` also carries the landing surface: a footer
+with the GitHub + portfolio links, and a static about/FAQ section that
+supplies the below-the-fold, search-legible copy. Both are plain markup with
+no JavaScript, so the built `dist/` is at once the app and its landing page.
+
 ## Supporting modules
 
 - `core/randomSeed.js` — `generateRandomSeed(random = Math.random)`, an
