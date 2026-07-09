@@ -5,6 +5,10 @@ import { generateAstroMotif } from './core/motifs/astro.js';
 import { renderMotifToSvg } from './core/render/svgRenderer.js';
 import { parseSeedState, buildSeedQuery } from './core/urlState.js';
 import { generateRandomSeed } from './core/randomSeed.js';
+import { buildCssTokens } from './core/export/cssTokens.js';
+import { buildTerminalTheme } from './core/export/terminalTheme.js';
+import { buildWallpaperSvg } from './core/export/wallpaper.js';
+import { buildExportFilename, triggerDownload } from './core/download.js';
 
 const DEFAULT_SEED = 'first-light';
 const DEFAULT_FAMILY = 'astro';
@@ -15,6 +19,10 @@ const els = {
   seedInput: document.querySelector('#seed-input'),
   newSeed: document.querySelector('#new-seed'),
   familyButtons: Array.from(document.querySelectorAll('[data-family]')),
+  exportCss: document.querySelector('#export-css'),
+  exportTerminal: document.querySelector('#export-terminal'),
+  exportWallpaper: document.querySelector('#export-wallpaper'),
+  wallpaperResolution: document.querySelector('#wallpaper-resolution'),
 };
 
 const initialQueryState = parseSeedState(window.location.search);
@@ -70,12 +78,19 @@ function syncFamilyButtons() {
   }
 }
 
+function setExportsEnabled(enabled) {
+  els.exportCss.disabled = !enabled;
+  els.exportTerminal.disabled = !enabled;
+  els.exportWallpaper.disabled = !enabled;
+}
+
 function render({ animate = true } = {}) {
   const bundle = currentBundle();
   applyPaletteToPage(bundle.palette);
   swapPreview(renderMotifToSvg(bundle), { animate });
   syncFamilyButtons();
   syncUrl();
+  setExportsEnabled(true);
   return bundle;
 }
 
@@ -108,3 +123,43 @@ for (const button of els.familyButtons) {
     render({ animate: true });
   });
 }
+
+function downloadExport(button, { content, mimeType, kind, extension }) {
+  button.disabled = true;
+  try {
+    const filename = buildExportFilename(state.seed, state.family, kind, extension);
+    triggerDownload(content, filename, mimeType);
+  } finally {
+    window.setTimeout(() => {
+      button.disabled = false;
+    }, 400);
+  }
+}
+
+els.exportCss.addEventListener('click', () => {
+  downloadExport(els.exportCss, {
+    content: buildCssTokens(generatePalette(state.seed, state.family)),
+    mimeType: 'text/css',
+    kind: 'css',
+    extension: 'css',
+  });
+});
+
+els.exportTerminal.addEventListener('click', () => {
+  downloadExport(els.exportTerminal, {
+    content: JSON.stringify(buildTerminalTheme(generatePalette(state.seed, state.family)), null, 2),
+    mimeType: 'application/json',
+    kind: 'terminal',
+    extension: 'json',
+  });
+});
+
+els.exportWallpaper.addEventListener('click', () => {
+  const [width, height] = els.wallpaperResolution.value.split('x').map(Number);
+  downloadExport(els.exportWallpaper, {
+    content: buildWallpaperSvg(currentBundle(), { width, height }),
+    mimeType: 'image/svg+xml',
+    kind: 'wallpaper',
+    extension: 'svg',
+  });
+});
