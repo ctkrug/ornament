@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --ornament-bg: hsl(235 38% 14%);
+  --ornament-surface-1: hsl(235 34% 20%);
+  --ornament-surface-2: hsl(235 30% 27%);
+  --ornament-text: hsl(235 45% 92%);
+  --ornament-text-muted: hsl(235 20% 70%);
+  --ornament-accent: hsl(45 55% 55%);
+  --ornament-accent-support: hsl(175 45% 60%);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ornament-bg);
+  color: var(--ornament-text);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-4);
+}
+
+.wordmark {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.08em;
+  color: var(--ornament-accent);
+  margin: 0;
+}
+
+.preview {
+  width: min(90vw, 512px);
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--ornament-surface-1);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.preview svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
