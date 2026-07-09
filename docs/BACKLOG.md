@@ -79,7 +79,7 @@ them.
   - Works over `https` (or `localhost`) using the async Clipboard API, with
     a visible fallback message if clipboard access is denied.
 
-- [ ] **Motif parameter tuning.**
+- [x] **Motif parameter tuning.**
   - Nouveau exposes a "strand count" control (bounded e.g. 3–9) and astro
     exposes a "star count" control (bounded e.g. 8–24); changing either
     re-renders the motif with the new parameter while keeping the same
