@@ -17,6 +17,10 @@ describe('parseSeedState', () => {
     expect(parseSeedState('?seed=&family=astro').seed).toBeNull();
   });
 
+  it('returns null seed for a whitespace-only seed value', () => {
+    expect(parseSeedState('?seed=%20%20%20&family=astro').seed).toBeNull();
+  });
+
   it('returns null family for an unrecognized family value', () => {
     expect(parseSeedState('?seed=first-light&family=bogus').family).toBeNull();
   });
