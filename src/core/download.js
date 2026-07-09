@@ -1,8 +1,13 @@
+const MAX_SEED_SLUG_LENGTH = 40;
+
 /**
  * Builds a stable, filesystem-safe export filename from the current studio
  * state, e.g. "ornament-first-light-astro-css.css". Non-alphanumeric
  * characters in the seed are collapsed to hyphens so a seed containing
- * spaces or punctuation never breaks the downloaded file name.
+ * spaces or punctuation never breaks the downloaded file name, and the
+ * result is capped to MAX_SEED_SLUG_LENGTH so a pasted or hand-typed
+ * seed of unbounded length can't produce a filename that exceeds a
+ * filesystem's path-length limit.
  */
 export function buildExportFilename(seed, family, kind, extension) {
   const safeSeed =
@@ -10,7 +15,8 @@ export function buildExportFilename(seed, family, kind, extension) {
       .trim()
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-+|-+$/g, '') || 'ornament';
+      .replace(/^-+|-+$/g, '')
+      .slice(0, MAX_SEED_SLUG_LENGTH) || 'ornament';
   return `ornament-${safeSeed}-${family}-${kind}.${extension}`;
 }
 
