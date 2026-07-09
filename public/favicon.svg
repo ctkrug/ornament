@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="hsl(235 38% 14%)" />
+  <circle cx="32" cy="32" r="13" fill="none" stroke="hsl(45 55% 55%)" stroke-width="3" />
+  <circle cx="32" cy="14" r="2.4" fill="hsl(235 45% 92%)" />
+  <circle cx="49" cy="32" r="1.8" fill="hsl(235 45% 92%)" />
+  <circle cx="15" cy="32" r="1.8" fill="hsl(235 45% 92%)" />
+  <path
+    d="M32 45 C 41 45 45 38 42 31"
+    fill="none"
+    stroke="hsl(175 45% 60%)"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  />
+</svg>
