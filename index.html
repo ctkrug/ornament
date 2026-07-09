@@ -90,8 +90,82 @@
         </section>
       </main>
 
+      <footer class="studio-footer">
+        <a class="footer-link" href="https://github.com/ctkrug/ornament">View on GitHub</a>
+        <a class="footer-link footer-portfolio" href="https://apps.charliekrug.com">
+          More by Charlie Krug &#8594; apps.charliekrug.com
+        </a>
+      </footer>
+
       <div id="toast" class="toast" role="status" aria-live="polite"></div>
     </div>
+
+    <section class="about" aria-labelledby="about-heading">
+      <div class="about-inner">
+        <h2 id="about-heading">One seed, a matching theme everywhere</h2>
+        <p>
+          Ornament is a generative theme studio. Type a seed or click New seed,
+          pick a motif family (Nouveau or Astro), and it draws a live preview
+          and builds three matching exports: CSS custom properties for a web
+          project, a 16-color terminal theme for your shell, and a tiled SVG
+          wallpaper for your desktop. Every export comes from the same seeded
+          palette, so the accent in your terminal is the same accent in your
+          CSS and your wallpaper.
+        </p>
+        <p>
+          The palette and the artwork are computed, not looked up. Ornament
+          hashes your seed into a deterministic number stream and uses it to
+          derive HSL colors and to draw the motif: sinuous art-nouveau whiplash
+          curves, or a constellation chart of stars linked into a spanning
+          graph. The same seed always reproduces the same result, so a seed is
+          a shareable name for a whole theme. Send someone a link with
+          <code>?seed=first-light&amp;family=astro</code> and they see exactly
+          what you saw.
+        </p>
+
+        <h3>How to use it</h3>
+        <ol class="about-steps">
+          <li>Pick a seed. Type any word, or click New seed for a random one.</li>
+          <li>Choose Nouveau or Astro, then tune the strand or star count.</li>
+          <li>Export CSS, a terminal theme, or a wallpaper at 1080p, 1440p, or 4K.</li>
+          <li>Copy the seed or share the URL to hand the exact theme to someone else.</li>
+        </ol>
+
+        <h3>Questions</h3>
+        <dl class="faq">
+          <dt>Is Ornament free?</dt>
+          <dd>
+            Yes. It runs entirely in your browser, there is no account, and
+            nothing is uploaded. The code is open source under the MIT license.
+          </dd>
+          <dt>Where does the artwork come from?</dt>
+          <dd>
+            It is drawn in code from your seed. There are no stock images or
+            fixed presets; the curves and star charts are generated
+            procedurally, so no two seeds look alike.
+          </dd>
+          <dt>Will the same seed always give me the same theme?</dt>
+          <dd>
+            Yes. Generation is deterministic. The same seed and motif family
+            reproduce the same palette, artwork, and exports every time, on any
+            device.
+          </dd>
+          <dt>How do I use the exported CSS?</dt>
+          <dd>
+            The file is a <code>:root</code> block of <code>--ornament-*</code>
+            custom properties. Drop it into your stylesheet and reference the
+            variables, for example <code>color: var(--ornament-text)</code>.
+          </dd>
+          <dt>What terminals does the theme work with?</dt>
+          <dd>
+            The export is a 16-color ANSI scheme with background, foreground,
+            cursor, and selection colors. Map those keys onto Alacritty, iTerm2,
+            Windows Terminal, or any emulator that takes a color list.
+          </dd>
+        </dl>
+      </div>
+    </section>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>

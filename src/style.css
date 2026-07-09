@@ -402,6 +402,105 @@ h3 {
   min-width: 170px;
 }
 
+/* --- Studio footer --- */
+
+.studio-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-muted);
+}
+
+.footer-link {
+  color: var(--ornament-accent-support);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--motion-ui),
+    border-color var(--motion-ui);
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  outline: none;
+  color: var(--ornament-accent);
+  border-bottom-color: var(--ornament-accent);
+}
+
+.footer-portfolio {
+  color: var(--ornament-text-muted);
+}
+
+/* --- About / SEO section --- */
+
+.about {
+  background: var(--ornament-surface-1);
+  border-top: 1px solid var(--border-muted);
+  padding: var(--space-6) var(--space-4);
+}
+
+.about-inner {
+  max-width: 68ch;
+  margin: 0 auto;
+  color: var(--ornament-text);
+}
+
+.about h2 {
+  color: var(--ornament-accent);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.04em;
+  margin: 0 0 var(--space-4);
+}
+
+.about h3 {
+  color: var(--ornament-text);
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+.about p {
+  margin: 0 0 var(--space-3);
+}
+
+.about code {
+  font-family: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+  font-size: 0.9em;
+  background: var(--ornament-bg);
+  border: 1px solid var(--border-muted);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.about-steps {
+  margin: 0;
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.faq {
+  margin: 0;
+}
+
+.faq dt {
+  font-weight: 600;
+  color: var(--ornament-accent-support);
+  margin-top: var(--space-3);
+}
+
+.faq dd {
+  margin: var(--space-1) 0 0;
+  color: var(--ornament-text-muted);
+}
+
 /* --- Toast --- */
 
 .toast {
