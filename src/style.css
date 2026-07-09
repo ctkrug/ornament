@@ -19,6 +19,10 @@
   --space-6: 48px;
   --radius: 10px;
   --motion-ui: 180ms ease-out;
+  /* The previous hsl(235 20% 40%) read under 3:1 against surface-1/surface-2
+     (WCAG 1.4.11 non-text contrast); lifted to the lightest value that
+     still reads as a quiet resting border, not an accent. */
+  --border-muted: hsl(235 18% 58%);
 }
 
 * {
@@ -193,7 +197,7 @@ h3 {
   font: inherit;
   color: var(--ornament-text);
   background: var(--ornament-surface-1);
-  border: 1px solid hsl(235 20% 40%);
+  border: 1px solid var(--border-muted);
   border-radius: var(--radius);
   padding: var(--space-2) var(--space-3);
   min-height: 44px;
@@ -243,13 +247,13 @@ h3 {
 
 .range::-webkit-slider-runnable-track {
   height: 4px;
-  background: hsl(235 20% 40%);
+  background: var(--border-muted);
   border-radius: 2px;
 }
 
 .range::-moz-range-track {
   height: 4px;
-  background: hsl(235 20% 40%);
+  background: var(--border-muted);
   border-radius: 2px;
 }
 
@@ -297,7 +301,7 @@ h3 {
   font-weight: 600;
   color: var(--ornament-text);
   background: var(--ornament-surface-1);
-  border: 1px solid hsl(235 20% 40%);
+  border: 1px solid var(--border-muted);
   border-radius: var(--radius);
   padding: var(--space-2) var(--space-3);
   min-height: 44px;
