@@ -31,4 +31,21 @@ describe('mute preference persistence', () => {
     expect(() => saveMutedPreference(true, null)).not.toThrow();
     expect(loadMutedPreference(null)).toBe(false);
   });
+
+  it('falls back to unmuted when accessing localStorage itself throws', () => {
+    // Mirrors Safari private browsing, where the localStorage getter throws
+    // a SecurityError instead of the property simply being undefined.
+    Object.defineProperty(globalThis, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('SecurityError');
+      },
+    });
+    try {
+      expect(() => loadMutedPreference(null)).not.toThrow();
+      expect(loadMutedPreference(null)).toBe(false);
+    } finally {
+      delete globalThis.localStorage;
+    }
+  });
 });

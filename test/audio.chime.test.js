@@ -80,4 +80,12 @@ describe('createChimePlayer', () => {
     expect(() => player.play()).not.toThrow();
     expect(player.play()).toBe(false);
   });
+
+  it('resolves its own AudioContext class when none is injected', () => {
+    // Exercises the real defaultAudioContextClass() default-parameter path,
+    // which falls back to null in this window-less test environment.
+    const player = createChimePlayer({ storage: fakeStorage() });
+    expect(() => player.play()).not.toThrow();
+    expect(player.play()).toBe(false);
+  });
 });
