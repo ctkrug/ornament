@@ -56,6 +56,9 @@ guarantees an export always matches whatever seed is currently on screen.
 
 - `core/randomSeed.js` — `generateRandomSeed(random = Math.random)`, an
   injectable-RNG syllable generator for the "New seed" control.
+- `core/motifParams.js` — `clamp()` bounds the strand-count/star-count
+  slider values into their valid ranges before they reach the motif
+  generators.
 - `core/download.js` — `buildExportFilename` (pure, sanitizes the seed for a
   safe file name) and `triggerDownload` (Blob + anchor-click plumbing).
 - `core/audio/mutePreference.js` + `core/audio/chime.js` — a synthesized
