@@ -4,6 +4,7 @@ import { generateNouveauMotif } from './core/motifs/nouveau.js';
 import { generateAstroMotif } from './core/motifs/astro.js';
 import { renderMotifToSvg } from './core/render/svgRenderer.js';
 import { parseSeedState, buildSeedQuery } from './core/urlState.js';
+import { generateRandomSeed } from './core/randomSeed.js';
 
 const DEFAULT_SEED = 'first-light';
 const DEFAULT_FAMILY = 'astro';
@@ -12,6 +13,7 @@ const FADE_OUT_MS = 220;
 const els = {
   preview: document.querySelector('#preview'),
   seedInput: document.querySelector('#seed-input'),
+  newSeed: document.querySelector('#new-seed'),
   familyButtons: Array.from(document.querySelectorAll('[data-family]')),
 };
 
@@ -77,5 +79,32 @@ function render({ animate = true } = {}) {
   return bundle;
 }
 
+function setSeed(seed) {
+  state.seed = seed;
+  els.seedInput.value = seed;
+  render({ animate: true });
+}
+
 els.seedInput.value = state.seed;
 render({ animate: false });
+
+els.newSeed.addEventListener('click', () => {
+  setSeed(generateRandomSeed());
+});
+
+els.seedInput.addEventListener('change', () => {
+  const value = els.seedInput.value.trim();
+  if (!value) {
+    els.seedInput.value = state.seed;
+    return;
+  }
+  setSeed(value);
+});
+
+for (const button of els.familyButtons) {
+  button.addEventListener('click', () => {
+    if (button.dataset.family === state.family) return;
+    state.family = button.dataset.family;
+    render({ animate: true });
+  });
+}
