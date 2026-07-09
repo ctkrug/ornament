@@ -9,6 +9,7 @@ import { buildCssTokens } from './core/export/cssTokens.js';
 import { buildTerminalTheme } from './core/export/terminalTheme.js';
 import { buildWallpaperSvg } from './core/export/wallpaper.js';
 import { buildExportFilename, triggerDownload } from './core/download.js';
+import { createChimePlayer } from './core/audio/chime.js';
 
 const DEFAULT_SEED = 'first-light';
 const DEFAULT_FAMILY = 'astro';
@@ -23,7 +24,21 @@ const els = {
   exportTerminal: document.querySelector('#export-terminal'),
   exportWallpaper: document.querySelector('#export-wallpaper'),
   wallpaperResolution: document.querySelector('#wallpaper-resolution'),
+  copySeed: document.querySelector('#copy-seed'),
+  muteToggle: document.querySelector('#mute-toggle'),
+  toast: document.querySelector('#toast'),
 };
+
+const TOAST_DURATION_MS = 2600;
+let toastTimer = null;
+const chime = createChimePlayer();
+
+function showToast(message) {
+  els.toast.textContent = message;
+  els.toast.classList.add('is-visible');
+  if (toastTimer) window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => els.toast.classList.remove('is-visible'), TOAST_DURATION_MS);
+}
 
 const initialQueryState = parseSeedState(window.location.search);
 const state = {
@@ -98,6 +113,7 @@ function setSeed(seed) {
   state.seed = seed;
   els.seedInput.value = seed;
   render({ animate: true });
+  chime.play(660);
 }
 
 els.seedInput.value = state.seed;
@@ -121,14 +137,17 @@ for (const button of els.familyButtons) {
     if (button.dataset.family === state.family) return;
     state.family = button.dataset.family;
     render({ animate: true });
+    chime.play(660);
   });
 }
 
-function downloadExport(button, { content, mimeType, kind, extension }) {
+function downloadExport(button, { content, mimeType, kind, extension, label }) {
   button.disabled = true;
   try {
     const filename = buildExportFilename(state.seed, state.family, kind, extension);
     triggerDownload(content, filename, mimeType);
+    showToast(`✓ ${label} exported — ${filename}`);
+    chime.play(880);
   } finally {
     window.setTimeout(() => {
       button.disabled = false;
@@ -142,6 +161,7 @@ els.exportCss.addEventListener('click', () => {
     mimeType: 'text/css',
     kind: 'css',
     extension: 'css',
+    label: 'CSS tokens',
   });
 });
 
@@ -151,6 +171,7 @@ els.exportTerminal.addEventListener('click', () => {
     mimeType: 'application/json',
     kind: 'terminal',
     extension: 'json',
+    label: 'Terminal theme',
   });
 });
 
@@ -161,5 +182,24 @@ els.exportWallpaper.addEventListener('click', () => {
     mimeType: 'image/svg+xml',
     kind: 'wallpaper',
     extension: 'svg',
+    label: 'Wallpaper',
   });
+});
+
+els.copySeed.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(state.seed);
+    showToast(`✓ Copied seed "${state.seed}"`);
+  } catch {
+    showToast('Clipboard unavailable — copy the seed from the input above');
+  }
+});
+
+els.muteToggle.setAttribute('aria-pressed', String(chime.isMuted()));
+
+els.muteToggle.addEventListener('click', () => {
+  const nextMuted = !chime.isMuted();
+  chime.setMuted(nextMuted);
+  els.muteToggle.setAttribute('aria-pressed', String(nextMuted));
+  els.muteToggle.setAttribute('aria-label', nextMuted ? 'Unmute sound' : 'Mute sound');
 });
